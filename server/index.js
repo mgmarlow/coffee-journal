@@ -2,18 +2,32 @@ const express = require('express')
 const cors = require('cors')
 const graphqlHTTP = require('express-graphql')
 const { buildSchema } = require('graphql')
-const createFakeDatabase = require('./createFakeDatabase')
+require('dotenv').config()
+
+const CoffeeService = require('./CoffeeService')
 
 const schema = buildSchema(`
   input CoffeeInput {
+    roaster: String
     name: String
     rating: Int
+    roast_date: String
+    brew_date: String
+    roast_style: String
+    origin: String
+    notes: String
   }
 
   type Coffee {
     id: String
+    roaster: String
     name: String
     rating: Int
+    roast_date: String
+    brew_date: String
+    roast_style: String
+    origin: String
+    notes: String
   }
 
   type Query {
@@ -26,42 +40,25 @@ const schema = buildSchema(`
   }
 `)
 
-class Coffee {
-  constructor(id, { name, rating }) {
-    this.id = id
-    this.name = name
-    this.rating = rating
-  }
-}
-
-const fakeDatabase = {
-  coffees: createFakeDatabase(),
-}
-
 const root = {
-  coffees: () => {
-    return Object.keys(fakeDatabase.coffees).map(
-      id => new Coffee(id, fakeDatabase.coffees[id]),
-    )
+  coffees: async () => {
+    return await CoffeeService.get()
   },
 
-  createCoffee: ({ input }) => {
-    const id = require('crypto')
-      .randomBytes(10)
-      .toString('hex')
-
-    fakeDatabase.coffees[id] = input
-
-    return new Coffee(id, input)
-  },
-
-  updateCoffee: ({ id, input }) => {
-    if (!fakeDatabase.coffees[id]) {
-      throw new Error('no coffee exists with id ' + id)
+  createCoffee: async args => {
+    try {
+      return await CoffeeService.create(args)
+    } catch (err) {
+      throw new Error('failed to create coffee')
     }
+  },
 
-    fakeDatabase.coffees[id] = input
-    return new Coffee(id, input)
+  updateCoffee: async args => {
+    try {
+      return await CoffeeService.update(args)
+    } catch (err) {
+      throw new Error(`failed to update coffee with id ${id}`)
+    }
   },
 }
 
