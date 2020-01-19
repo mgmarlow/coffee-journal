@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const graphqlHTTP = require('express-graphql')
 const { buildSchema } = require('graphql')
+const createFakeDatabase = require('./createFakeDatabase')
 
 const schema = buildSchema(`
   input CoffeeInput {
@@ -34,7 +35,7 @@ class Coffee {
 }
 
 const fakeDatabase = {
-  coffees: {},
+  coffees: createFakeDatabase(),
 }
 
 const root = {

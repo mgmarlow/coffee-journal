@@ -12,6 +12,7 @@ const GET_COFFEES = gql`
   }
 `
 
+// Full object is needed from the
 const ADD_COFFEE = gql`
   mutation CreateCoffeeMutation($input: CoffeeInput!) {
     createCoffee(input: $input) {
