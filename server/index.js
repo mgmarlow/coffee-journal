@@ -1,10 +1,15 @@
 const express = require('express')
 const cors = require('cors')
+const Airtable = require('airtable')
 const graphqlHTTP = require('express-graphql')
 const { buildSchema } = require('graphql')
 require('dotenv').config()
 
-const CoffeeService = require('./CoffeeService')
+const base = new Airtable({
+  apiKey: process.env.AIRTABLE_API_KEY,
+}).base(process.env.BASE_ID)
+
+const coffeeService = require('./coffee.service')
 
 const schema = buildSchema(`
   input CoffeeInput {
@@ -41,21 +46,21 @@ const schema = buildSchema(`
 `)
 
 const root = {
-  coffees: async () => {
-    return await CoffeeService.get()
+  coffees: async (args, context) => {
+    return await coffeeService.get(args, context)
   },
 
-  createCoffee: async args => {
+  createCoffee: async (args, context) => {
     try {
-      return await CoffeeService.create(args)
+      return await coffeeService.create(args, context)
     } catch (err) {
       throw new Error('failed to create coffee')
     }
   },
 
-  updateCoffee: async args => {
+  updateCoffee: async (args, context) => {
     try {
-      return await CoffeeService.update(args)
+      return await coffeeService.update(args, context)
     } catch (err) {
       throw new Error(`failed to update coffee with id ${id}`)
     }
@@ -70,6 +75,9 @@ app.use(
     schema: schema,
     rootValue: root,
     graphiql: true, // navigate to /graphql for a graphql browser interface
+    context: {
+      base,
+    },
   }),
 )
 app.listen(4000)
