@@ -22,25 +22,24 @@ async function get(_, { base }) {
   return result.map(c => new Coffee(c.id, c.fields))
 }
 
-async function create({ input }, { base }) {
-  const result = await base('Coffee ratings').create([
-    {
-      fields: fieldsFromInput(input),
-    },
-  ])
+async function getById({ id }, { base }) {
+  const result = await base('Coffee ratings').find(id)
+  return new Coffee(result.id, result.fields)
+}
 
+async function create({ input }, { base }) {
+  const result = await base('Coffee ratings').create(fieldsFromInput(input))
   return new Coffee(result[0].id, result[0].fields)
 }
 
 async function update({ id, input }, { base }) {
-  const result = await base('Coffee ratings').update([
-    {
-      id,
-      fields: fieldsFromInput(input),
-    },
-  ])
-
+  const result = await base('Coffee ratings').update(id, fieldsFromInput(input))
   return new Coffee(result[0].id, result[0].fields)
+}
+
+async function destroy({ id }, { base }) {
+  const result = await base('Coffee ratings').destroy(id)
+  return 'success'
 }
 
 function fieldsFromInput(input) {
@@ -57,6 +56,8 @@ function fieldsFromInput(input) {
 
 module.exports = {
   get,
+  getById,
   create,
   update,
+  destroy,
 }

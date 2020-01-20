@@ -37,17 +37,23 @@ const schema = buildSchema(`
 
   type Query {
     coffees: [Coffee]!
+    getCoffee(id: ID!): Coffee
   }
 
   type Mutation {
     createCoffee(input: CoffeeInput): Coffee
     updateCoffee(id: ID!, input: CoffeeInput): Coffee
+    deleteCoffee(id: ID!): String
   }
 `)
 
 const root = {
   coffees: async (args, context) => {
     return await coffeeService.get(args, context)
+  },
+
+  getCoffee: async (args, context) => {
+    return await coffeeService.getById(args, context)
   },
 
   createCoffee: async (args, context) => {
@@ -63,6 +69,14 @@ const root = {
       return await coffeeService.update(args, context)
     } catch (err) {
       throw new Error(`failed to update coffee with id ${id}`)
+    }
+  },
+
+  deleteCoffee: async (args, context) => {
+    try {
+      return await coffeeService.destroy(args, context)
+    } catch (err) {
+      throw new Error(`failed to delete coffee with id ${id}`)
     }
   },
 }
