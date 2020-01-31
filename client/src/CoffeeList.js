@@ -23,7 +23,7 @@ const CoffeeList = () => {
   const { loading, error, data } = useQuery(GET_COFFEES)
 
   if (loading) return <p>Loading...</p>
-  if (error) return <p>Error</p>
+  if (error) return <p>Error when fetching coffee.</p>
 
   return (
     <ul>

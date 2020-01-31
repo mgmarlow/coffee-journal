@@ -2,7 +2,7 @@ import React from 'react'
 import CoffeeList from './CoffeeList'
 import AddCoffee from './AddCoffee'
 
-function App(props) {
+const App = () => {
   return (
     <div className="container is-fluid">
       <h1 className="title">Coffee Journal</h1>
@@ -12,8 +12,4 @@ function App(props) {
   )
 }
 
-function AppRoot(props) {
-  return <App />
-}
-
-export default AppRoot
+export default App

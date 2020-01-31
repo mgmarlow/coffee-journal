@@ -1,10 +1,10 @@
 import React from 'react'
-import { Formik, Form, Field } from 'formik'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import * as yup from 'yup'
 import { gql } from 'apollo-boost'
 import { useMutation } from '@apollo/react-hooks'
 import { GET_COFFEES } from './CoffeeList'
 
-// Full object is needed from the
 const ADD_COFFEE = gql`
   mutation CreateCoffeeMutation($input: CoffeeInput!) {
     createCoffee(input: $input) {
@@ -21,16 +21,37 @@ const ADD_COFFEE = gql`
   }
 `
 
-const FormItem = ({ label, children, className }) => (
+const FormItem = ({ name, label, children, className }) => (
   <div className="field">
     <label className="label is-small">{label}</label>
     <div className="control">
       {React.cloneElement(children, {
         className: className || 'input is-small',
       })}
+      <ErrorMessage
+        component="p"
+        className="help is-danger"
+        name={label || name}
+      />
     </div>
   </div>
 )
+
+const schema = yup.object().shape({
+  roaster: yup.string().required(),
+  name: yup.string().required(),
+  origin: yup.string(),
+  rating: yup
+    .number()
+    .required()
+    .positive()
+    .max(5)
+    .integer(),
+  roast_date: yup.date(),
+  brew_date: yup.date().default(() => new Date().toLocaleDateString()),
+  roast_style: yup.string(),
+  notes: yup.string(),
+})
 
 const AddCoffee = () => {
   const [addCoffee] = useMutation(ADD_COFFEE, {
@@ -56,11 +77,12 @@ const AddCoffee = () => {
         roast_style: '',
         notes: '',
       }}
-      onSubmit={(values, { setSubmitting }) => {
+      validationSchema={schema}
+      onSubmit={values => {
         addCoffee({ variables: { input: values } })
       }}
     >
-      {() => (
+      {({ errors, touched }) => (
         <Form>
           <FormItem label="roaster">
             <Field type="text" name="roaster" />
@@ -78,15 +100,15 @@ const AddCoffee = () => {
             <Field type="number" name="rating" min="1" max="5" />
           </FormItem>
 
-          <FormItem label="roast date">
+          <FormItem label="roast date" name="roast_date">
             <Field type="text" name="roast_date" />
           </FormItem>
 
-          <FormItem label="brew date">
+          <FormItem label="brew date" name="brew_date">
             <Field type="text" name="brew_date" />
           </FormItem>
 
-          <FormItem label="roast style">
+          <FormItem label="roast style" name="roast_style">
             <Field type="text" name="roast_style" />
           </FormItem>
 
