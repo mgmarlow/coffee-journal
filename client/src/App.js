@@ -4,10 +4,10 @@ import AddCoffee from './AddCoffee'
 
 function App(props) {
   return (
-    <div>
-      <h1>Coffee Journal</h1>
-      <AddCoffee />
+    <div className="container is-fluid">
+      <h1 className="title">Coffee Journal</h1>
       <CoffeeList />
+      <AddCoffee />
     </div>
   )
 }

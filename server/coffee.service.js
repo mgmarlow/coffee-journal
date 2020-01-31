@@ -29,12 +29,12 @@ async function getById({ id }, { base }) {
 
 async function create({ input }, { base }) {
   const result = await base('Coffee ratings').create(fieldsFromInput(input))
-  return new Coffee(result[0].id, result[0].fields)
+  return new Coffee(result.id, result.fields)
 }
 
 async function update({ id, input }, { base }) {
   const result = await base('Coffee ratings').update(id, fieldsFromInput(input))
-  return new Coffee(result[0].id, result[0].fields)
+  return new Coffee(result.id, result.fields)
 }
 
 async function destroy({ id }, { base }) {
@@ -45,6 +45,7 @@ async function destroy({ id }, { base }) {
 function fieldsFromInput(input) {
   return {
     Name: input.name,
+    Roaster: input.roaster,
     Rating: input.rating,
     'Roast Date': input.roast_date,
     'Brew Date': input.brew_date,

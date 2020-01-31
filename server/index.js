@@ -13,9 +13,9 @@ const coffeeService = require('./coffee.service')
 
 const schema = buildSchema(`
   input CoffeeInput {
-    roaster: String
-    name: String
-    rating: Int
+    roaster: String!
+    name: String!
+    rating: Int!
     roast_date: String
     brew_date: String
     roast_style: String
