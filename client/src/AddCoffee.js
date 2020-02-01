@@ -21,22 +21,6 @@ const ADD_COFFEE = gql`
   }
 `
 
-const FormItem = ({ name, label, children, className }) => (
-  <div className="field">
-    <label className="label is-small">{label}</label>
-    <div className="control">
-      {React.cloneElement(children, {
-        className: className || 'input is-small',
-      })}
-      <ErrorMessage
-        component="p"
-        className="help is-danger"
-        name={label || name}
-      />
-    </div>
-  </div>
-)
-
 const schema = yup.object().shape({
   roaster: yup.string().required(),
   name: yup.string().required(),
@@ -84,45 +68,75 @@ const AddCoffee = () => {
     >
       {({ errors, touched }) => (
         <Form>
-          <FormItem label="roaster">
-            <Field type="text" name="roaster" />
-          </FormItem>
+          <label className="label">roaster</label>
+          <Field className="input" type="text" name="roaster" />
+          <ErrorMessage
+            component="p"
+            className="help is-danger"
+            name="roaster"
+          />
 
-          <FormItem label="name">
-            <Field type="text" name="name" />
-          </FormItem>
+          <label className="label">name</label>
+          <Field className="input" type="text" name="name" />
+          <ErrorMessage component="p" className="help is-danger" name="name" />
 
-          <FormItem label="origin">
-            <Field type="text" name="origin" />
-          </FormItem>
+          <label className="label">origin</label>
+          <Field className="input" type="text" name="origin" />
+          <ErrorMessage
+            component="p"
+            className="help is-danger"
+            name="origin"
+          />
 
-          <FormItem label="rating">
-            <Field type="number" name="rating" min="1" max="5" />
-          </FormItem>
+          <label className="label">roast style</label>
+          <Field className="input" type="text" name="roast_style" />
+          <ErrorMessage
+            component="p"
+            className="help is-danger"
+            name="roast_style"
+          />
 
-          <FormItem label="roast date" name="roast_date">
-            <Field type="text" name="roast_date" />
-          </FormItem>
+          <label className="label">rating</label>
+          <Field
+            className="input"
+            type="number"
+            name="rating"
+            min="1"
+            max="5"
+          />
+          <ErrorMessage
+            component="p"
+            className="help is-danger"
+            name="rating"
+          />
 
-          <FormItem label="brew date" name="brew_date">
-            <Field type="text" name="brew_date" />
-          </FormItem>
+          <label className="label">roast date</label>
+          <Field className="input" type="text" name="roast_date" />
+          <ErrorMessage
+            component="p"
+            className="help is-danger"
+            name="roast_date"
+          />
 
-          <FormItem label="roast style" name="roast_style">
-            <Field type="text" name="roast_style" />
-          </FormItem>
+          <label className="label">brew date</label>
+          <Field className="input" type="text" name="brew_date" />
+          <ErrorMessage
+            component="p"
+            className="help is-danger"
+            name="brew_date"
+          />
 
-          <FormItem className="textarea" label="notes">
-            <Field as="textarea" name="notes" placeholder="tasting notes" />
-          </FormItem>
+          <label className="label">brew date</label>
+          <Field
+            className="textarea"
+            as="textarea"
+            name="notes"
+            placeholder="tasting notes"
+          />
 
-          <div className="field is-grouped">
-            <div className="control">
-              <button className="button is-link" type="submit">
-                add coffee
-              </button>
-            </div>
-          </div>
+          <button className="button is-link" type="submit">
+            add coffee
+          </button>
         </Form>
       )}
     </Formik>

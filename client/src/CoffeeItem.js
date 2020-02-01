@@ -24,24 +24,15 @@ const CoffeeItem = ({ coffee }) => {
   })
 
   return (
-    <div className="card">
-      <header className="card-header">
-        <p className="card-header-title">{name}</p>
-        <button
-          onClick={() => deleteCoffee({ variables: { id } })}
-          className="card-header-icon"
-        >
-          delete
-        </button>
-      </header>
-      <div className="card-content">
-        <p className="subtitle is-6">Roaster: {roaster}</p>
-        {notes && <p>Notes: {notes}</p>}
-      </div>
-      <div className="card-footer">
-        <p className="card-footer-item">{rating}/5</p>
-        <p className="card-footer-item">edit</p>
-      </div>
+    <div>
+      <p>{name}</p>
+      <button onClick={() => deleteCoffee({ variables: { id } })}>
+        delete
+      </button>
+      <p>Roaster: {roaster}</p>
+      {notes && <p>Notes: {notes}</p>}
+      <p>{rating}/5</p>
+      <p>edit</p>
     </div>
   )
 }

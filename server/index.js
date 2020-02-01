@@ -3,8 +3,8 @@ const cors = require('cors')
 const graphqlHTTP = require('express-graphql')
 require('dotenv').config()
 
-const root = require('./root')
 const schema = require('./schema')
+const root = require('./root')
 const context = require('./context')
 
 const app = express()
