@@ -4,7 +4,7 @@ import AddCoffee from './AddCoffee'
 
 const App = () => {
   return (
-    <div className="container is-fluid">
+    <div className="container">
       <h1 className="title">Coffee Journal</h1>
       <CoffeeList />
       <AddCoffee />
