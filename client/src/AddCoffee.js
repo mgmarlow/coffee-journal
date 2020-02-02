@@ -1,9 +1,10 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
+import omit from 'lodash/omit'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as yup from 'yup'
 import { gql } from 'apollo-boost'
 import { useMutation } from '@apollo/react-hooks'
-import { GET_COFFEES } from './CoffeeList'
 
 const ADD_COFFEE = gql`
   mutation CreateCoffeeMutation($input: CoffeeInput!) {
@@ -21,50 +22,75 @@ const ADD_COFFEE = gql`
   }
 `
 
+const UPDATE_COFFEE = gql`
+  mutation UpdateCoffeeMutation($id: ID!, $input: CoffeeInput!) {
+    updateCoffee(id: $id, input: $input) {
+      id
+      roaster
+      name
+      rating
+      roast_date
+      brew_date
+      roast_style
+      origin
+      notes
+    }
+  }
+`
+
 const schema = yup.object().shape({
   roaster: yup.string().required(),
   name: yup.string().required(),
-  origin: yup.string(),
+  origin: yup.string().nullable(),
   rating: yup
     .number()
     .required()
     .positive()
     .max(5)
     .integer(),
-  roast_date: yup.date(),
-  brew_date: yup.date().default(() => new Date().toLocaleDateString()),
-  roast_style: yup.string(),
-  notes: yup.string(),
+  roast_date: yup.date().nullable(),
+  brew_date: yup
+    .date()
+    .default(() => new Date().toLocaleDateString())
+    .nullable(),
+  roast_style: yup.string().nullable(),
+  notes: yup.string().nullable(),
 })
 
-const AddCoffee = () => {
-  const [addCoffee] = useMutation(ADD_COFFEE, {
-    // Note: update queries automatically update local cache
-    update(cache, { data: { createCoffee } }) {
-      const { coffees } = cache.readQuery({ query: GET_COFFEES })
-      cache.writeQuery({
-        query: GET_COFFEES,
-        data: { coffees: coffees.concat([createCoffee]) },
-      })
-    },
-  })
+const AddCoffee = ({ coffee }) => {
+  const history = useHistory()
+  const [addCoffee] = useMutation(ADD_COFFEE)
+  const [updateCoffee] = useMutation(UPDATE_COFFEE)
+
+  const defaultValues = {
+    roaster: '',
+    name: '',
+    origin: '',
+    rating: 1,
+    roast_date: new Date().toLocaleDateString(),
+    brew_date: new Date().toLocaleDateString(),
+    roast_style: '',
+    notes: '',
+  }
+
+  const initialValues = coffee
+    ? omit(coffee, ['id', '__typename'])
+    : defaultValues
+
+  const handleSubmit = async values => {
+    if (coffee) {
+      await updateCoffee({ variables: { id: coffee.id, input: values } })
+      history.push('/')
+    } else {
+      addCoffee({ variables: { input: values } })
+    }
+  }
 
   return (
     <Formik
-      initialValues={{
-        roaster: '',
-        name: '',
-        origin: '',
-        rating: 1,
-        roast_date: new Date().toLocaleDateString(),
-        brew_date: new Date().toLocaleDateString(),
-        roast_style: '',
-        notes: '',
-      }}
+      initialValues={initialValues}
       validationSchema={schema}
-      onSubmit={values => {
-        addCoffee({ variables: { input: values } })
-      }}
+      onSubmit={handleSubmit}
     >
       {({ errors, touched }) => (
         <Form>
@@ -135,7 +161,7 @@ const AddCoffee = () => {
           />
 
           <button className="button is-link" type="submit">
-            add coffee
+            {coffee ? 'edit' : 'add'} coffee
           </button>
         </Form>
       )}

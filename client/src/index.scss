@@ -1,0 +1,32 @@
+@import 'bulma';
+
+@font-face {
+  font-family: 'Cardenio Modern';
+  src: url('fonts/CardenioModern-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Cardenio Modern';
+  src: url('fonts/CardenioModern-Bold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+html,
+body,
+p,
+button,
+* {
+  font-family: 'Cardenio Modern', Arial, Helvetica, sans-serif;
+  font-size: 16px;
+}
+
+p,
+a,
+button,
+input,
+li {
+  font-size: 1.5rem;
+}

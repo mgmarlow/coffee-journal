@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { gql } from 'apollo-boost'
 import { useMutation } from '@apollo/react-hooks'
 import { GET_COFFEES } from './CoffeeList'
@@ -25,14 +26,30 @@ const CoffeeItem = ({ coffee }) => {
 
   return (
     <div>
-      <p>{name}</p>
-      <button onClick={() => deleteCoffee({ variables: { id } })}>
-        delete
-      </button>
+      <div className="columns is-mobile">
+        <div className="column">
+          <p className="has-text-weight-bold">{name}</p>
+        </div>
+        <div className="column">
+          <Link to={{ pathname: `/edit/${id}`, state: coffee }}>
+            <button>edit</button>
+          </Link>
+        </div>
+        <div className="column">
+          <button onClick={() => deleteCoffee({ variables: { id } })}>
+            delete
+          </button>
+        </div>
+      </div>
+
       <p>Roaster: {roaster}</p>
-      {notes && <p>Notes: {notes}</p>}
-      <p>{rating}/5</p>
-      <p>edit</p>
+      <p>Rating: {rating}/5</p>
+      {notes && (
+        <>
+          <h3 className="is-size-3">Notes:</h3>
+          <p>{notes}</p>
+        </>
+      )}
     </div>
   )
 }

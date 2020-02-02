@@ -5,7 +5,7 @@
 /.pnp
 .pnp.js
 
-index.css
+tachyons.css
 
 # testing
 /coverage
