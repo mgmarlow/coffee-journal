@@ -1,36 +1,42 @@
 import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import CoffeeList from './CoffeeList'
-import CoffeeForm from './CoffeeForm'
+import CoffeeList from './pages/CoffeeList'
+import CoffeeForm from './pages/CoffeeForm'
+import Nav from './components/Nav'
+import Footer from './components/Footer'
+
+const Page = ({ children }) => (
+  <div>
+    <Nav />
+    <section className="container">{children}</section>
+    <Footer />
+  </div>
+)
 
 const EditCoffeePage = () => {
   const { state } = useLocation()
 
   return (
-    <section className="container">
+    <Page>
       <h1 className="is-size-1">edit coffee</h1>
       <CoffeeForm coffee={state} />
-    </section>
+    </Page>
   )
 }
 
 const AddCoffeePage = () => (
-  <section className="container">
+  <Page>
     <h1 className="is-size-1">add coffee</h1>
     <CoffeeForm />
-  </section>
+  </Page>
 )
 
 // TODO: Add slab: https://tachyons.io/components/lists/slab-stat-large/index.html
 const Home = () => (
-  <section className="container">
-    <h1 className="is-size-1">coffee journal</h1>
-    <Link to="/add">
-      <button>Add a new coffee</button>
-    </Link>
+  <Page>
     <CoffeeList />
-  </section>
+  </Page>
 )
 
 const App = () => {

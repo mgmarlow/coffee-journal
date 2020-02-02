@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { gql } from 'apollo-boost'
 import { useMutation } from '@apollo/react-hooks'
 import { GET_COFFEES } from './CoffeeList'
-import LinkButton from './components/LinkButton'
+import LinkButton from '../../components/LinkButton'
 import styles from './CoffeeItem.module.scss'
 
 const DELETE_COFFEE = gql`
@@ -32,7 +32,7 @@ const CoffeeItem = ({ coffee }) => {
     <div className={styles.wrapper}>
       <div className="columns is-mobile is-vcentered">
         <div className="column">
-          <h3 className="is-size-2">{name}</h3>
+          <h3 className="is-size-3">{name}</h3>
         </div>
         <div className="column is-narrow is-right">
           <Link to={{ pathname: `/edit/${id}`, state: coffee }}>

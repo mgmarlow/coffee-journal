@@ -67,8 +67,8 @@ const CoffeeForm = ({ coffee }) => {
     name: '',
     origin: '',
     rating: 1,
-    roast_date: new Date().toLocaleDateString(),
-    brew_date: new Date().toLocaleDateString(),
+    // roast_date: new Date().toLocaleDateString(),
+    // brew_date: new Date().toLocaleDateString(),
     roast_style: '',
     notes: '',
   }
@@ -137,7 +137,7 @@ const CoffeeForm = ({ coffee }) => {
             name="rating"
           />
 
-          <label className="label">roast date</label>
+          {/* <label className="label">roast date</label>
           <Field className="input" type="text" name="roast_date" />
           <ErrorMessage
             component="p"
@@ -151,7 +151,7 @@ const CoffeeForm = ({ coffee }) => {
             component="p"
             className="help is-danger"
             name="brew_date"
-          />
+          /> */}
 
           <label className="label">brew date</label>
           <Field
