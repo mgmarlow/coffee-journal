@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import CoffeeList from './CoffeeList'
-import AddCoffee from './AddCoffee'
+import CoffeeForm from './CoffeeForm'
 
 const EditCoffeePage = () => {
   const { state } = useLocation()
@@ -10,7 +10,7 @@ const EditCoffeePage = () => {
   return (
     <section className="container">
       <h1 className="is-size-1">edit coffee</h1>
-      <AddCoffee coffee={state} />
+      <CoffeeForm coffee={state} />
     </section>
   )
 }
@@ -18,7 +18,7 @@ const EditCoffeePage = () => {
 const AddCoffeePage = () => (
   <section className="container">
     <h1 className="is-size-1">add coffee</h1>
-    <AddCoffee />
+    <CoffeeForm />
   </section>
 )
 

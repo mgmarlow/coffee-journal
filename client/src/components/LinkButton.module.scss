@@ -1,0 +1,11 @@
+.linkButton {
+  border: none;
+  background-color: #fff;
+  text-decoration: underline;
+  cursor: pointer;
+  color: #03dac6;
+
+  &:hover {
+    color: #000;
+  }
+}

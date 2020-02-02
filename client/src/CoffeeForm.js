@@ -57,7 +57,7 @@ const schema = yup.object().shape({
   notes: yup.string().nullable(),
 })
 
-const AddCoffee = ({ coffee }) => {
+const CoffeeForm = ({ coffee }) => {
   const history = useHistory()
   const [addCoffee] = useMutation(ADD_COFFEE)
   const [updateCoffee] = useMutation(UPDATE_COFFEE)
@@ -82,7 +82,8 @@ const AddCoffee = ({ coffee }) => {
       await updateCoffee({ variables: { id: coffee.id, input: values } })
       history.push('/')
     } else {
-      addCoffee({ variables: { input: values } })
+      await addCoffee({ variables: { input: values } })
+      history.push('/')
     }
   }
 
@@ -169,4 +170,4 @@ const AddCoffee = ({ coffee }) => {
   )
 }
 
-export default AddCoffee
+export default CoffeeForm
