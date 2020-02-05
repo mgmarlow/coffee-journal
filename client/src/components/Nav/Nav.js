@@ -36,7 +36,7 @@ const Nav = () => {
             Home
           </button>
           <button className={classnames('navbar-item', styles.transparent)}>
-            Documentation
+            Brewing Guide
           </button>
         </div>
 

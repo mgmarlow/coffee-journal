@@ -30,4 +30,20 @@ module.exports = {
       throw new Error(`failed to delete coffee with id ${id}`)
     }
   },
+
+  me: (_, ctx) => {
+    if (!ctx.user) {
+      throw new Error('unauthenticated')
+    }
+
+    return ctx.service.user.get(ctx.user.id)
+  },
+
+  signup: ({ email, password }, ctx) => {
+    return ctx.service.user.signup(email, password)
+  },
+
+  login: ({ email, password }, ctx) => {
+    return ctx.service.user.login(email, password)
+  },
 }

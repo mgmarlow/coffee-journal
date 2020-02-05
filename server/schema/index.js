@@ -12,6 +12,7 @@ module.exports = buildSchema(`
     notes: String
   }
 
+  "Black coffee."
   type Coffee {
     id: String
     roaster: String
@@ -24,14 +25,23 @@ module.exports = buildSchema(`
     notes: String
   }
 
+  type User {
+    id: String!
+    email: String!
+  }
+
   type Query {
     coffees: [Coffee]!
     getCoffee(id: ID!): Coffee
+    me: User
   }
 
   type Mutation {
     createCoffee(input: CoffeeInput): Coffee
     updateCoffee(id: ID!, input: CoffeeInput): Coffee
     deleteCoffee(id: ID!): String
+
+    signup(email: String!, password: String!): String
+    login(email: String!, password: String!): String
   }
 `)
