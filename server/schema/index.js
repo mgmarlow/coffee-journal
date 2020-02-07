@@ -1,6 +1,6 @@
 const { buildSchema } = require('graphql')
 
-module.exports = buildSchema(`
+module.exports = `
   input CoffeeInput {
     roaster: String!
     name: String!
@@ -33,7 +33,7 @@ module.exports = buildSchema(`
   type Query {
     coffees: [Coffee]!
     getCoffee(id: ID!): Coffee
-    me: User
+    user: User
   }
 
   type Mutation {
@@ -44,4 +44,4 @@ module.exports = buildSchema(`
     signup(email: String!, password: String!): String
     login(email: String!, password: String!): String
   }
-`)
+`
