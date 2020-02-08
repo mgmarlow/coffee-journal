@@ -44,4 +44,8 @@ module.exports = {
       return ctx.service.user.login(email, password)
     },
   },
+
+  User: {
+    coffees: (user, _args, ctx) => ctx.service.coffee.getByUserId(user.id),
+  },
 }

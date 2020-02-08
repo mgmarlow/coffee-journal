@@ -10,6 +10,7 @@ module.exports = `
     roast_style: String
     origin: String
     notes: String
+    user_id: String
   }
 
   "Black coffee."
@@ -23,11 +24,13 @@ module.exports = `
     roast_style: String
     origin: String
     notes: String
+    user: User
   }
 
   type User {
     id: String!
     email: String!
+    coffees: [Coffee]
   }
 
   type Query {

@@ -9,6 +9,7 @@ class Coffee {
     this.roast_style = fields['Roast Style']
     this.origin = fields['Origin']
     this.notes = fields['Notes']
+    this.user_id = fields['User']
   }
 }
 

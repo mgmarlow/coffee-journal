@@ -9,6 +9,7 @@ const fieldsFromInput = input => ({
   'Roast Style': input.roast_style,
   Origin: input.origin,
   Notes: input.notes,
+  User: [input.user_id],
 })
 
 class CoffeeService {
@@ -29,6 +30,24 @@ class CoffeeService {
   async getById(id) {
     const result = await this.base('Coffee ratings').find(id)
     return new Coffee(result.id, result.fields)
+  }
+
+  async getByUserId(userId) {
+    let coffees = []
+
+    await this.base('Coffee ratings')
+      .select()
+      .eachPage((records, fetch) => {
+        const userRecords = records.filter(record => {
+          const user = record.get('User')
+          return user && user.includes(userId)
+        })
+
+        coffees = coffees.concat(userRecords)
+        fetch()
+      })
+
+    return coffees.map(coffee => new Coffee(coffee.id, coffee.fields))
   }
 
   async create(input) {
