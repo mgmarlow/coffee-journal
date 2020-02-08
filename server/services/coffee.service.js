@@ -9,7 +9,6 @@ const fieldsFromInput = input => ({
   'Roast Style': input.roast_style,
   Origin: input.origin,
   Notes: input.notes,
-  User: [input.user_id],
 })
 
 class CoffeeService {
@@ -50,10 +49,11 @@ class CoffeeService {
     return coffees.map(coffee => new Coffee(coffee.id, coffee.fields))
   }
 
-  async create(input) {
-    const result = await this.base('Coffee ratings').create(
-      fieldsFromInput(input),
-    )
+  async create(input, userId) {
+    const result = await this.base('Coffee ratings').create({
+      ...fieldsFromInput(input),
+      User: [userId],
+    })
     return new Coffee(result.id, result.fields)
   }
 

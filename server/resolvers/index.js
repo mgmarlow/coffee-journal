@@ -17,13 +17,21 @@ module.exports = {
 
   Mutation: {
     createCoffee: (_obj, { input }, ctx) => {
+      if (!ctx.user) {
+        throw new Error('unauthenticated')
+      }
+
       try {
-        return ctx.service.coffee.create(input)
+        return ctx.service.coffee.create(input, ctx.user.id)
       } catch (err) {
         throw new Error('failed to create coffee')
       }
     },
     updateCoffee: (_obj, { id, input }, ctx) => {
+      if (!ctx.user) {
+        throw new Error('unauthenticated')
+      }
+
       try {
         return ctx.service.coffee.update(id, input)
       } catch (err) {
@@ -31,12 +39,17 @@ module.exports = {
       }
     },
     deleteCoffee: (_obj, { id }, ctx) => {
+      if (!ctx.user) {
+        throw new Error('unauthenticated')
+      }
+
       try {
         return ctx.service.coffee.destroy(id)
       } catch (err) {
         throw new Error(`failed to delete coffee with id ${id}`)
       }
     },
+
     signup: (_obj, { email, password }, ctx) => {
       return ctx.service.user.signup(email, password)
     },

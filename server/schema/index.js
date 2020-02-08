@@ -10,7 +10,6 @@ module.exports = `
     roast_style: String
     origin: String
     notes: String
-    user_id: String
   }
 
   "Black coffee."
