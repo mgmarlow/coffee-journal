@@ -12,7 +12,7 @@ module.exports = {
       return ctx.service.coffee.get()
     },
     getCoffee: (_obj, { id }, ctx) => {
-      return ctx.service.coffee.getById(id)
+      return ctx.service.coffee.byId(id)
     },
     user: protected((_ob, _args, ctx) => {
       return ctx.service.user.get(ctx.user.id)
@@ -52,5 +52,10 @@ module.exports = {
 
   User: {
     coffees: (user, _args, ctx) => ctx.service.coffee.getByUserId(user.id),
+  },
+
+  Coffee: {
+    method: (coffee, _args, ctx) =>
+      ctx.service.brewMethod.byId(coffee.method_id[0]),
   },
 }

@@ -9,7 +9,10 @@ class Coffee {
     this.roast_style = fields['Roast Style']
     this.origin = fields['Origin']
     this.notes = fields['Notes']
+
+    // Relationships, not exposed via graphql schema
     this.user_id = fields['User']
+    this.method_id = fields['Brew Method']
   }
 }
 

@@ -26,7 +26,7 @@ class CoffeeService {
     return result.map(c => new Coffee(c.id, c.fields))
   }
 
-  async getById(id) {
+  async byId(id) {
     const result = await this.base('Coffee ratings').find(id)
     return new Coffee(result.id, result.fields)
   }

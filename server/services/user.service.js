@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt')
 const jsonwebtoken = require('jsonwebtoken')
+const User = require('../models/User')
 
 class UserService {
   constructor(base) {
@@ -8,11 +9,7 @@ class UserService {
 
   async get(id) {
     const result = await this.base('Users').find(id)
-
-    return {
-      id,
-      email: result.get('Email'),
-    }
+    return new User(id, result.fields)
   }
 
   async signup(email, password) {

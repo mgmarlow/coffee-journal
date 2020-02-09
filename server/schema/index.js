@@ -12,9 +12,15 @@ module.exports = `
     notes: String
   }
 
+  type BrewMethod {
+    id: String!
+    name: String!
+    description: String
+  }
+
   "Black coffee."
   type Coffee {
-    id: String
+    id: String!
     roaster: String
     name: String
     rating: Int
@@ -24,6 +30,7 @@ module.exports = `
     origin: String
     notes: String
     user: User
+    method: BrewMethod
   }
 
   type User {
