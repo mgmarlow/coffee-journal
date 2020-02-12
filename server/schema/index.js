@@ -15,16 +15,22 @@ module.exports = `
   type BrewMethod {
     id: String!
     name: String!
-    description: String
+    description: String @deprecated(reason: "Field is deprecated")
   }
 
-  "Black coffee."
+  "Black coffee is the best coffee."
   type Coffee {
     id: String!
     roaster: String
     name: String
     rating: Int
+    """
+    when the coffee was roasted
+    """
     roast_date: String
+    """
+    when the coffee was brewed
+    """
     brew_date: String
     roast_style: String
     origin: String
